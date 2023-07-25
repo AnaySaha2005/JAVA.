@@ -40,7 +40,7 @@ import java.util.Scanner;
                 for(int j=0;j<n;j++){
                     for(int k=0;k<n;k++){
                         if(a[i]+a[j]+a[k]==0&& i!=j && k!=j && k!=i){
-                          System.out.println("["+a[i]+", "+a[j]+", "+a[k]+"]");
+                          System.out.println("["+a[i]+", "+a[j]+", "+a[k]+"] hi");
                         }
 
                     }
