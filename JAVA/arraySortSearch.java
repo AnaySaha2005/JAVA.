@@ -53,7 +53,7 @@ public class arraySortSearch {
                     pos=(finall+initial)/2;
                     
                  }
-              }  System.out.println( "ELEMENT IS PRESENT AT "+pos);
+              }  System.out.println( "ELEMENT IS PRESENT AT Hereeee"+pos);
               
     }
     
