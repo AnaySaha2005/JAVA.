@@ -57,7 +57,64 @@ public class LEETCODE {
             }
             return -1;
           }
-
+         
+            public int romanToInt(String s) {
+                int sum=0;int check=-1;char c=' ',d=' ';
+                for(int i=0;i<s.length()-1,i++){
+                    
+                    c=s.charAt(i);d=s.charAt(i+1);
+                    if(c=='I'&& d=='V')
+                    { if(i==s.length()-2)check++;
+                        sum+=4;
+                    }
+                   else if(c=='I'&& d=='X')
+                     { if(i==s.length()-2)check++;
+                        sum+=9;
+                    }
+                    else if(c=='X'&& d=='L')
+                      { if(i==s.length()-2)check++;
+                        sum+=40;
+                    }
+                    else if(c=='X'&& d=='C')
+                     { if(i==s.length()-2)check++;
+                        sum+=90;
+                    }
+                    else if(c=='C'&& d=='D')
+                      { if(i==s.length()-2)check++;
+                        sum+=400;
+                    }
+                    else if(c=='C'&& d=='D')
+                      { if(i==s.length()-2)check++;
+                        sum+=900;
+                    }
+                    else{
+                        if(c=='I') sum+=1;
+                        if(c=='V') sum+=5;
+                        if(c=='X') sum+=10;
+                        if(c=='L') sum+=50;
+                        if(c=='C') sum+=100;
+                        if(c=='D') sum+=500;
+                        if(c=='M') sum+=1000;
+        
+                    }
+        
+                }
+                if(check==-1)
+               {
+                   c=s.charAt(s.length()-1);
+                   if(c=='I') sum+=1;
+                        if(c=='V') sum+=5;
+                        if(c=='X') sum+=10;
+                        if(c=='L') sum+=50;
+                        if(c=='C') sum+=100;
+                        if(c=='D') sum+=500;
+                        if(c=='M') sum+=1000;
+        
+        
+               }
+               return sum;
+            }
+        
          
         
     
