@@ -125,11 +125,11 @@ public class LEETCODE {
           }
          }
          for(int i=0;i<=ei;i++)
-         {
-          if(BinarySearch(a,si,ei,target-a[i])!=-1)
+         { int c=BinarySearch(a,si,ei,target-a[i]);
+          if(c!=-1)
           {
-             sum2[0]=i+1;sum2[1]=BinarySearch(a, si, ei, i)+1;
-            return sum2;
+             sum2[0]=i+1;sum2[1]=c+1;
+             return sum2;
           }
          }
          return sum2;
