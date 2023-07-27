@@ -65,27 +65,27 @@ public class LEETCODE {
                     c=s.charAt(i);d=s.charAt(i+1);
                     if(c=='I'&& d=='V')
                     { if(i==s.length()-2)check++;
-                        sum+=4;
+                        sum+=4;i++;
                     }
                    else if(c=='I'&& d=='X')
                      { if(i==s.length()-2)check++;
-                        sum+=9;
+                        sum+=9;i++;
                     }
                     else if(c=='X'&& d=='L')
                       { if(i==s.length()-2)check++;
-                        sum+=40;
+                        sum+=40;i++;
                     }
                     else if(c=='X'&& d=='C')
                      { if(i==s.length()-2)check++;
-                        sum+=90;
+                        sum+=90;i++;
                     }
                     else if(c=='C'&& d=='D')
                       { if(i==s.length()-2)check++;
-                        sum+=400;
+                        sum+=400;i++;
                     }
-                    else if(c=='C'&& d=='D')
+                    else if(c=='C'&& d=='M')
                       { if(i==s.length()-2)check++;
-                        sum+=900;
+                        sum+=900;i++;
                     }
                     else{
                         if(c=='I') sum+=1;
@@ -115,12 +115,40 @@ public class LEETCODE {
                return sum;
             }
         
-         
+          public static int[] twoSum(int[] a, int target) {
+         int si=0,ei=0; int sum2[]=new int [2];
+         for(int i=0;i<a.length;i++){
+          if(a[i]>target)
+          {
+            ei=i-1;
+            break;
+          }
+         }
+         for(int i=0;i<=ei;i++)
+         {
+          if(BinarySearch(a,si,ei,target-a[i])!=-1)
+          {
+             sum2[0]=i+1;sum2[1]=BinarySearch(a, si, ei, i)+1;
+            return sum2;
+          }
+         }
+         return sum2;
+    }
+    public static int BinarySearch(int a[],int si,int ei,int num){
+      while(si<=ei){
+        if(si==ei)return si;
+        int mid =si+(ei-si)/2;
+        if(a[mid]<num)si=mid+1;
+        else ei=mid;
+      }
+      return -1;
+    }
         
     
         public static void main(String[] args) {
-         System.out.println(romanToInt("MCMXCIV"));
-            
+         int a[]={2,7,11,15};
+         int arr[]=twoSum(a,9);
+            System.out.println(arr[0]+"  "+arr[1]);
         }
       }
     
