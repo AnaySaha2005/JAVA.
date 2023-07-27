@@ -116,14 +116,8 @@ public class LEETCODE {
             }
         
           public static int[] twoSum(int[] a, int target) {
-         int si=0,ei=0; int sum2[]=new int [2];
-         for(int i=0;i<a.length;i++){
-          if(a[i]>target)
-          {
-            ei=i-1;
-            break;
-          }
-         }
+         int si=0,ei=a.length-1; int sum2[]=new int [2];
+         
          for(int i=0;i<=ei;i++)
          { int c=BinarySearch(a,si,ei,target-a[i]);
           if(c!=-1)
@@ -135,6 +129,7 @@ public class LEETCODE {
          return sum2;
     }
     public static int BinarySearch(int a[],int si,int ei,int num){
+      si++;
       while(si<=ei){
         if(si==ei)return si;
         int mid =si+(ei-si)/2;
@@ -146,8 +141,8 @@ public class LEETCODE {
         
     
         public static void main(String[] args) {
-         int a[]={2,7,11,15};
-         int arr[]=twoSum(a,9);
+         int a[]={-1,0};
+         int arr[]=twoSum(a,-1);
             System.out.println(arr[0]+"  "+arr[1]);
         }
       }
