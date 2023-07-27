@@ -58,9 +58,9 @@ public class LEETCODE {
             return -1;
           }
          
-            public int romanToInt(String s) {
+            public static  int romanToInt(String s) {
                 int sum=0;int check=-1;char c=' ',d=' ';
-                for(int i=0;i<s.length()-1,i++){
+                for(int i=0;i<s.length()-1;i++){
                     
                     c=s.charAt(i);d=s.charAt(i+1);
                     if(c=='I'&& d=='V')
@@ -119,10 +119,7 @@ public class LEETCODE {
         
     
         public static void main(String[] args) {
-            int gas1[]={2,3,4};int cost1[]={3,4,3};
-             int gas2[]={1,2,3,4,5};int cost2[]={3,4,5,2,1};
-                   int i= canCompleteCircuit(gas1, cost1);
-              System.out.println(i);
+         System.out.println(romanToInt("MCMXCIV"));
             
         }
       }
