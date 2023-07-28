@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class LEETCODE {
   
@@ -119,31 +120,62 @@ public class LEETCODE {
          int si=0,ei=a.length-1; int sum2[]=new int [2];
          
          for(int i=0;i<=ei;i++)
-         { int c=BinarySearch(a,si,ei,target-a[i]);
+        { 
+         { int c=BinarySearch(a,i,ei,target-a[i]);
           if(c!=-1)
           {
              sum2[0]=i+1;sum2[1]=c+1;
              return sum2;
           }
          }
+        }
          return sum2;
-    }
-    public static int BinarySearch(int a[],int si,int ei,int num){
-      si++;
-      while(si<=ei){
-        if(si==ei)return si;
-        int mid =si+(ei-si)/2;
-        if(a[mid]<num)si=mid+1;
-        else ei=mid;
       }
-      return -1;
+    public static int BinarySearch(int array[],int low,int high,int x){
+      low++;
+      while (low <= high) {
+      int mid = low + (high - low) / 2;
+
+      if (array[mid] == x)
+        return mid;
+
+      if (array[mid] < x)
+        low = mid + 1;
+
+      else
+        high = mid - 1;
     }
+
+    return -1;
+    }
+  
+         public static  int minSpeedOnTime(int[] a, double hourlimit) {
+      if(Math.round(hourlimit)<a.length-1) 
+      return -1;
+      int speed=1;
+
+     while(speed<=Integer.MAX_VALUE)
+     {
+      double hour=0;
+      for(int i=0;i<a.length;i++){
+        if(a[i]%speed!=0 && i!=a.length-1)
+        hour+=(int)(a[i]/speed)+1;
+        else hour+=(double)(a[i])/(double)(speed);
+      }
+      if(hour<=hourlimit)
+      break;
+      speed ++;
+      }
+      return speed;
+
+     }
+   
         
     
         public static void main(String[] args) {
-         int a[]={-1,0};
-         int arr[]=twoSum(a,-1);
-            System.out.println(arr[0]+"  "+arr[1]);
+         int a[]={1,3,2};
+         System.out.println(minSpeedOnTime(a, 2.70));
+           
         }
       }
     
