@@ -1,59 +1,50 @@
-import java.util.Scanner;
-
 public class Nqueen {
-   static  int ar[][]; static int n;
-    Nqueen(int n){
-        this.n=n;
-        ar=new int[n][n];
+static int prevColumn=0;
+    public static void  nQueenplacing(int a[][],int row){
+ if(row==a.length)
+  { 
+    print(a);
+  return;
+  }
+ for( int column=0;column<a.length;column++)
+ if(isSafe(a,row,column)){
+    a[row][column]+=1;
+    nQueenplacing(a, row+1);
+    a[row][column]=0;
+ }
 
     }
-    public boolean placeQUEEN(int r,int c)
-    { int a=0,b=0;
-if(r==n)
-return true;
-if(c>=n)
-{
-    ar[a][b]=0;
-    return placeQUEEN(r-1,b++);
-}
-if(check(r,c)==true)
-{a=r;b=c;ar[r][c]=1;
-return(placeQUEEN(r+1,0));
-    }
-    else return placeQUEEN(r,c+1);
-
-    }
- 
-  
-    public  boolean check(int r,int c)
-{     for(int i=0;i<n;i++)
-    {
-        if(ar[r][i]==1||ar[i][c]==1)
+    public static boolean isSafe(int a[][],int row,int column){
+    //vertical up
+        for(int i=row-1;i>=0;i--)
+     if(a[i][column]==1)
+     return false;
+     //left diagonal
+     for(int i=row-1, j=column-1;i>=0&&j>=0;i--,j--){
+        if(a[i][j]==1)
         return false;
-    }//the error is here i dont know how to find the diagonal of any position of a array :(
-    for(int i=0;i<n;i++)
-    {    for(int j=0;j<n;j++)
-      {  if(i+j==c)
-        if(ar[i][j]==1)
-        return false; }
+     }
+     //right diagonal
+         for(int i=row-1, j=column+1;i>=0&&j<a.length;i--,j++){
+        if(a[i][j]==1)
+        return false;
        
-    } for(int i=r+1,j=c+1;i<n && j<n;i++,j++)
-    {
-        if(ar[i][j]==1)
-        return false;
+     }
+     return true;
     }
-    
-    return true;
-}
-public static  void main(String[] args) {
-    Scanner sc=new Scanner (System.in);
-     n=sc.nextInt();
-     Nqueen ob =new Nqueen(n);
-    System.out.println(ob.placeQUEEN(0,0));
-    for(int i=0;i<n;i++)
-    {for(int j=0;j<n;j++)
-    System.out.print(ar[i][j]+"  ");
-    System.out.println();
+    public static void print(int a[][]){
+        System.out.println("-----CHESS BOARD-----");
+         for(int i=0;i<a.length;i++)
+         {for(int j=0;j<a.length;j++)
+         System.out.print(a[i][j]+"  ");
+         
+          System.out.println();
+         }
     }
-}
+    public static void main(String[] args) {
+       int a[][]=new int[4][4];
+        
+        nQueenplacing(a, 0);
+       
+    }
 }
