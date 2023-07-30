@@ -2,11 +2,9 @@ public class SudokuSolver {
     public static boolean SudokuSolve(int a[][], int row, int column) {
         if (row == a.length )
             return true;
-        else if (row == a.length) {
-            System.out.println("solvable");
-            return false;
+          
 
-        }
+        
 
         int nextRow = row, nextColmun = column + 1;
         if (column+1 ==9) {
@@ -19,10 +17,11 @@ public class SudokuSolver {
         for (int i = 1; i < 10; i++) {
             if (isSafe(a, row, column, i)) {
                 a[row][column] = i;
-                if (SudokuSolve(a, nextRow, nextColmun));
+                if (SudokuSolve(a, nextRow, nextColmun))
                 return true;
+              a[row][column] = 0;
             }
-            a[row][column] = 0;
+       
         }
         return false;
     }
