@@ -16,7 +16,7 @@ public class MaxWater {
         return maxwater;
     }
 
-    public static int maxwaterOptimum(int[] a)// OPTIMUN
+    public static int maxwaterOptimum(int[] a)// OPTIMUN 2 POINTER APPROACH
     {
         int leftpointer = 0, rightpointer = a.length - 1, maxwater = 0, tempowater = 0;
         while (leftpointer < rightpointer) {
