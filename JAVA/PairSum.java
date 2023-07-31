@@ -1,7 +1,9 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PairSum {
     public static boolean check(ArrayList<Integer> list,int target){
+      /*
         int pivot=0;
         while(list.get(pivot)<list.get(pivot+1)){
             pivot++;
@@ -12,7 +14,8 @@ public class PairSum {
      for(int i=pivot;i>=0;i--){
        list.remove(i);
       
-   }
+   */
+  Collections.sort(list);
     
    int lp=0,rp=list.size()-1;
    while(lp<rp)
