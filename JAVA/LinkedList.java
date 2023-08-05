@@ -1,4 +1,4 @@
-public class LinkedList {
+public class Linkedlist {
   public static class Node {
     int data;
     Node link;
@@ -201,35 +201,86 @@ public class LinkedList {
   public void removeLoop() {
 
     Node slow = head, fast = head;
-    while(fast!=null||fast.link!=null) {
-  
+    while (fast != null || fast.link != null) {
+
       slow = slow.link;
       fast = fast.link.link;
       if (slow == fast) {
         break;
       }
     }
-    slow = head;Node temp=null;
+    slow = head;
+    Node temp = null;
     while (fast != slow) {
-      temp=fast;
+      temp = fast;
       fast = fast.link;
       slow = slow.link;
     }
-     temp.link = null;
+    temp.link = null;
   }
 
-  public static void main(String ags[]) {
-    LinkedList ll = new LinkedList();
-    ll.addLast(1);
-    ll.addLast(2);
-    ll.addLast(3);
+  public Node getMid(Node node) {
+    Node slow = node, fast = node;
+    while (fast.link != null && fast != null) {
+    
+      slow = slow.link;
+      fast = fast.link.link;
+    }
+    return slow;
+  }
+ public void mergelist(Node left,Node right){
+  Node mergedll=new Node(-1);
+   Node temp=mergedll;
+ while(left!=null&&right!=null){
+  if(left.data<right.data)
+  {
+    temp.link=left;
+    left=left.link;
+    temp=temp.link;
+  }
+  else{
+   temp.link=right;
+    right=right.link;
+    temp=temp.link;
+  }
+
+ }
+ while(left!=null){
+     temp.link=left;
+    left=left.link;
+    temp=temp.link;
+ }
+ while(right!=null){
+  temp.link=right;
+    right=right.link;
+    temp=temp.link;
+ }
+
+ }
+  public Node mergeSort(Node head) {
+    if (head.link == null||head==null) {
+      return head;
+    }
+      Node mid= getMid(head);
+      Node left=  mergeSort(mid.link);
+      mid.link=null;
+      Node right=  mergeSort(head);
+        mergelist(left,right);
+        return null;
+  }
+
+  public static void main(String[] args) {
+    Linkedlist ll = new Linkedlist();
     ll.addLast(4);
-    ll.addLast(5);
-    ll.addLast(6);
+    ll.addLast(1);
+    ll.addLast(9);
     ll.addLast(7);
-    tail.link = head.link;
-    ll.removeLoop();
-ll.print();;
+    ll.addLast(0);
+    ll.addLast(6);
+    ll.addLast(3);
+    ll.mergeSort(head);
+    ll.print();
+
   }
 
 }
