@@ -180,29 +180,56 @@ public class LinkedList {
   public void checkLoop() {
 
     Node slow = head, fast = head;
-    for (int i = 0; i < 3; i++) {
+
+    for (int i = 0;; i++) {
       if (fast == null) {
         System.out.println("LOOP   DOESN'T EXISTS");
         System.exit(0);
       }
+      slow = slow.link;
+      fast = fast.link.link;
       if (slow == fast) {
         System.out.println("LOOP EXISTS");
         System.exit(0);
       }
       slow = slow.link;
-      fast = fast.link.link;
+      fast = fast.link;
 
     }
+  }
+
+  public void removeLoop() {
+
+    Node slow = head, fast = head;
+    while(fast!=null||fast.link!=null) {
+  
+      slow = slow.link;
+      fast = fast.link.link;
+      if (slow == fast) {
+        break;
+      }
+    }
+    slow = head;Node temp=null;
+    while (fast != slow) {
+      temp=fast;
+      fast = fast.link;
+      slow = slow.link;
+    }
+     temp.link = null;
   }
 
   public static void main(String ags[]) {
     LinkedList ll = new LinkedList();
     ll.addLast(1);
     ll.addLast(2);
-
     ll.addLast(3);
-    ll.checkLoop();
-
+    ll.addLast(4);
+    ll.addLast(5);
+    ll.addLast(6);
+    ll.addLast(7);
+    tail.link = head.link;
+    ll.removeLoop();
+ll.print();;
   }
 
 }
