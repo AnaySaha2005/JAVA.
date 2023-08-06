@@ -220,11 +220,11 @@ public class LinkedList {
   }
 
   public Node getMid(Node head) {
-    Node slow = head, fast = head.link;
-    while (fast.link != null && fast != null) {
-
+    Node slow = head, fast = head;
+    while ( fast != null) {
+     
       slow = slow.link;
-      fast = fast.link;
+      fast = fast.link.link;
     }
     return slow;
   }
@@ -272,9 +272,8 @@ public class LinkedList {
   }
 
   public void ZigZag() {
-    int n = size()/2;
-     System.out.println(getMid(head));
-    Node p1 = head, p2 = head, prev = null;
+    int n = size();
+    Node p1 = head, p2 = getNode(n/2), prev = null;
    
     while (p2 != null) {
       Node next = p2.link;
@@ -317,6 +316,7 @@ public class LinkedList {
     ll.addLast(4);
     ll.addLast(5);
     ll.addLast(6);
+  
     ll.ZigZag();
     ll.print();
 
