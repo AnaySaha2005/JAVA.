@@ -14,14 +14,15 @@ public class DoubllyLinkedList {
     public static Node head;
     public static Node tail;
     public static int size;
- //add functions
+
+    // add functions
     public void addLast(int data) {
         size++;
         Node node = new Node(data);
         if (head == null) {
 
             head = tail = node;
-            head.prevLink=null;
+            head.prevLink = null;
             tail.link = null;
 
         } else {
@@ -31,25 +32,27 @@ public class DoubllyLinkedList {
             tail.link = null;
         }
     }
-    public void addFirst(int data){
-     
-        Node node=new Node(data);
-        if(head==null){
-            tail=node;
-            tail.link=null;
+
+    public void addFirst(int data) {
+
+        Node node = new Node(data);
+        if (head == null) {
+            tail = node;
+            tail.link = null;
+        } else {
+            node.link = head;
+            head.prevLink = node;
         }
-         else{
-          node.link=head;
-          head.prevLink=node;
-         }
-        head=node;
-        head.prevLink=null;
+        head = node;
+        head.prevLink = null;
     }
-//size function
+
+    // size function
     public int size() {
         return size;
     }
-//print function
+
+    // print function
     public void print() {
         Node temp = head;
         while (temp != null) {
@@ -58,13 +61,31 @@ public class DoubllyLinkedList {
         }
         System.out.println();
     }
-   public void reversePrint(){
-   Node temp=tail;
-   while(temp!=null){
-    System.out.print(temp.data+"  ");
-    temp=temp.prevLink;
-   }
-   }
+
+    public void reversePrint() {
+        Node temp = tail;
+        while (temp != null) {
+            System.out.print(temp.data + "  ");
+            temp = temp.prevLink;
+        }
+    }
+
+    // revome function
+    public void removeFirst() {
+        Node temp = head.link;
+        head = null;
+        head = temp;
+        head.prevLink = null;
+    }
+
+    public void removeLast() {
+        Node temp = tail.prevLink;
+        tail = null;
+        tail = temp;
+        tail.link = null;
+
+    }
+
     public static void main(String[] args) {
         DoubllyLinkedList dll = new DoubllyLinkedList();
         dll.addFirst(1);
@@ -73,9 +94,11 @@ public class DoubllyLinkedList {
         dll.addLast(4);
         dll.addLast(5);
         dll.addFirst(0);
+        dll.addLast(9);
         dll.print();
-        System.out.println(dl.size());
-        dll.reversePrint();
+        dll.removeFirst();
+        dll.removeLast();
+        dll.print();
 
     }
 
