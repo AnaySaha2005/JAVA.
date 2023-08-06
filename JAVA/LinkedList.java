@@ -1,4 +1,4 @@
-public class Linkedlist {
+public class LinkedList {
   public static class Node {
     int data;
     Node link;
@@ -219,66 +219,105 @@ public class Linkedlist {
     temp.link = null;
   }
 
-  public Node getMid(Node node) {
-    Node slow = node, fast = node;
+  public Node getMid(Node head) {
+    Node slow = head, fast = head.link;
     while (fast.link != null && fast != null) {
-    
+
       slow = slow.link;
-      fast = fast.link.link;
+      fast = fast.link;
     }
     return slow;
   }
- public void mergelist(Node left,Node right){
-  Node mergedll=new Node(-1);
-   Node temp=mergedll;
- while(left!=null&&right!=null){
-  if(left.data<right.data)
-  {
-    temp.link=left;
-    left=left.link;
-    temp=temp.link;
-  }
-  else{
-   temp.link=right;
-    right=right.link;
-    temp=temp.link;
+
+  public Node mergelist(Node left, Node right) {
+    Node mergedll = new Node(-1);
+    Node temp = mergedll;
+    while (left != null && right != null) {
+      if (left.data < right.data) {
+        temp.link = left;
+        left = left.link;
+        temp = temp.link;
+      } else {
+        temp.link = right;
+        right = right.link;
+        temp = temp.link;
+      }
+
+    }
+    while (left != null) {
+      temp.link = left;
+      left = left.link;
+      temp = temp.link;
+    }
+    while (right != null) {
+      temp.link = right;
+      right = right.link;
+      temp = temp.link;
+    }
+    return mergedll.link;
   }
 
- }
- while(left!=null){
-     temp.link=left;
-    left=left.link;
-    temp=temp.link;
- }
- while(right!=null){
-  temp.link=right;
-    right=right.link;
-    temp=temp.link;
- }
-
- }
   public Node mergeSort(Node head) {
-    if (head.link == null||head==null) {
+    if (head.link == null || head == null) {
       return head;
     }
-      Node mid= getMid(head);
-      Node left=  mergeSort(mid.link);
-      mid.link=null;
-      Node right=  mergeSort(head);
-        mergelist(left,right);
-        return null;
+    Node mid = getMid(head);
+    Node rightHead = mid.link;
+    mid.link = null;
+    Node right = mergeSort(rightHead);
+
+    Node left = mergeSort(head);
+    return mergelist(left, right);
+
+  }
+
+  public void ZigZag() {
+    int n = size()/2;
+     System.out.println(getMid(head));
+    Node p1 = head, p2 = head, prev = null;
+   
+    while (p2 != null) {
+      Node next = p2.link;
+      p2.link = prev;
+      prev = p2;
+      p2 = next;
+    }
+    p2 = tail;
+    if (n % 2 != 0) {
+      while (p1 != p2) {
+        Node firstnext = p1.link, lastnext = p2.link;
+        p1.link = p2;
+
+        p2.link = firstnext;
+        p1 = firstnext;
+
+        p2 = lastnext;
+
+      }
+      p1.link = null;
+    } else {
+      while (p1.link != p2) {
+     Node firstnext=p1.link,lastnext=p2.link;
+     p1.link=p2;
+     p2.link=firstnext;
+     p1=firstnext;
+     p2=lastnext;
+      }
+      p1.link = p2;
+      p2.link = null;
+    }
+
   }
 
   public static void main(String[] args) {
-    Linkedlist ll = new Linkedlist();
-    ll.addLast(4);
+    LinkedList ll = new LinkedList();
     ll.addLast(1);
-    ll.addLast(9);
-    ll.addLast(7);
-    ll.addLast(0);
-    ll.addLast(6);
+    ll.addLast(2);
     ll.addLast(3);
-    ll.mergeSort(head);
+    ll.addLast(4);
+    ll.addLast(5);
+    ll.addLast(6);
+    ll.ZigZag();
     ll.print();
 
   }
