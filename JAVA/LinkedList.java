@@ -221,8 +221,8 @@ public class LinkedList {
 
   public Node getMid(Node head) {
     Node slow = head, fast = head;
-    while ( fast != null) {
-     
+    while (fast != null) {
+
       slow = slow.link;
       fast = fast.link.link;
     }
@@ -273,8 +273,8 @@ public class LinkedList {
 
   public void ZigZag() {
     int n = size();
-    Node p1 = head, p2 = getNode(n/2), prev = null;
-   
+    Node p1 = head, p2 = getNode(n / 2), prev = null;
+
     while (p2 != null) {
       Node next = p2.link;
       p2.link = prev;
@@ -296,11 +296,11 @@ public class LinkedList {
       p1.link = null;
     } else {
       while (p1.link != p2) {
-     Node firstnext=p1.link,lastnext=p2.link;
-     p1.link=p2;
-     p2.link=firstnext;
-     p1=firstnext;
-     p2=lastnext;
+        Node firstnext = p1.link, lastnext = p2.link;
+        p1.link = p2;
+        p2.link = firstnext;
+        p1 = firstnext;
+        p2 = lastnext;
       }
       p1.link = p2;
       p2.link = null;
@@ -308,18 +308,91 @@ public class LinkedList {
 
   }
 
-  public static void main(String[] args) {
-    LinkedList ll = new LinkedList();
-    ll.addLast(1);
-    ll.addLast(2);
-    ll.addLast(3);
-    ll.addLast(4);
-    ll.addLast(5);
-    ll.addLast(6);
-  
-    ll.ZigZag();
-    ll.print();
+  public void retainMdeleteN(int m, int n) {
+    Node temp = head;
+    Node temp2 = head;
+    while (temp != null && temp2 != null) {
+      int retain = m;
+      int delete = n;
+      while (retain > 1) {
+        if (temp == null)
+          return;
+        temp = temp.link;
+        retain--;
+      }
+      temp2 = temp;
+      while (delete >= 0) {
+        if (temp2 == null)
+          return;
+        temp2 = temp2.link;
+        delete--;
+      }
+      temp.link = temp2;
+      temp = temp2;
 
+    }
+  }
+
+  public void swapNodes(int x, int y) {
+    x--;
+    y--;
+    int temp = getNode(x).data;
+    getNode(x).data = getNode(y).data;
+    getNode(y).data = temp;
+  }
+
+  public void evenOddList() {
+    int n = size();
+    Node tempo = null;
+    Node temp = new Node(-1);
+    Node node = head, prev = head;
+    while (n > 0) {
+      if (node.data % 2 == 0) {
+        temp.link = node;
+        temp = temp.link;
+        tempo = node.link;
+      } else {
+        Node oddnode = node;
+        tempo = node.link;
+        prev.link = node.link;
+
+        tail.link = oddnode;
+        tail = oddnode;
+
+        tail.link = null;
+
+      }
+
+      prev = node;
+      node = tempo;
+      n--;
+    }
+  }
+  public void merge(LinkedList ll)
+  { 
+    Node temp=head;
+    while(temp.link!=null){
+      temp=temp.link;
+      System.out.println(temp.data);
+       
+    }
+     // temp.link=ll.head;
+    }
+  
+  
+
+  public static void main(String[] args) {
+    LinkedList l1 = new LinkedList();
+    LinkedList l2 = new LinkedList();
+  l1.addLast(1);
+  l1.addLast(2);
+  l1.addLast(3);
+  l2.addLast(4);
+  l2.addLast(5);
+  l2.addLast(6);
+  l1.print();
+  l2.print();
+   
   }
 
 }
