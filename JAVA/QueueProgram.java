@@ -45,10 +45,23 @@ public class QueueProgram {
 
     }
     public static void reverse(int k,Queue<Integer>q1){
-        Queue<Integer>
+        Queue<Integer> q2=new LinkedList<>();
+        while ((k != 0)) {
+
+            q2.add(q1.remove());
+            k--;
+        }
+        while(!q2.isEmpty()){
+            q1.add(q2.remove());
+        }
+        print(q1);
     }
     public static void main(String[] args) {
-      reverse();
+        Queue<Integer>q=new LinkedList<>();
+
+        for(int i=0;i<10;i++)
+            q.add(i+1);
+      reverse(5,q);
 
     }
 }
