@@ -1,7 +1,4 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
-
+import java.util.*;
 public class QueueProgram {
     public static void QueueInterleave(){
         Queue<Integer>q=new LinkedList<>();
@@ -46,6 +43,9 @@ public class QueueProgram {
         }
         System.out.println(q);
 
+    }
+    public static void reverse(int k,Queue<Integer>q1){
+        Queue<Integer>
     }
     public static void main(String[] args) {
       reverse();
