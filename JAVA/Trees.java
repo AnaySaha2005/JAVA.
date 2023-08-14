@@ -61,9 +61,7 @@ public class Trees {
 
 
         }
-        public void print(){
 
-        }
     }
 class treeBuildCheck{
     public static void main(String[] args) {
