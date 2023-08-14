@@ -63,6 +63,30 @@ public class Trees {
         }
 
     }
+
+class TreeBuildRecursive{
+    public static class Node{
+      int data;
+      Node left;
+      Node right;
+      Node(int data){
+          this.data=data;
+          right=null;
+          left=null;
+      }
+      static int idx=-1;
+      public Node TreeBuild(int a[]){
+          idx++;
+          if(a[idx]==-1){
+              return null;
+          }
+          Node newNode= new Node(a[idx]);
+          newNode.left= TreeBuild(a);
+          newNode.right= TreeBuild(a);
+          return newNode;
+      }
+    }
+}
 class treeBuildCheck{
     public static void main(String[] args) {
         TreeBuild t=new TreeBuild();
