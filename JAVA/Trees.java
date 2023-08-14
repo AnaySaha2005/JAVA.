@@ -29,7 +29,7 @@ public class Trees {
                    pointer.leftlink=null;
                    pointer.count++;
                }
-               if(pointer.count==1){
+               else if(pointer.count==1){
                    pointer.rightlink=null;
                    pointer.count++;
                }
@@ -52,12 +52,16 @@ public class Trees {
                 pointer=temp;
 
             }
-            if(pointer.count>1)
+            else
             {
                 pointer=pointer.prelink;
+                add(data);
 
             }
 
+
+        }
+        public void print(){
 
         }
     }
