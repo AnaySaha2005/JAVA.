@@ -65,17 +65,19 @@ public class Trees {
     }
 
 class TreeBuildRecursive{
-    public static class Node{
-      int data;
-      Node left;
-      Node right;
-      Node(int data){
-          this.data=data;
-          right=null;
-          left=null;
-      }
+    public static class Node {
+        int data;
+        Node left;
+        Node right;
+
+        Node(int data) {
+            this.data = data;
+            right = null;
+            left = null;
+        }
+    }
       static int idx=-1;
-      public Node TreeBuild(int a[]){
+      public Node TreeBuild(int[] a){
           idx++;
           if(a[idx]==-1){
               return null;
@@ -86,23 +88,12 @@ class TreeBuildRecursive{
           return newNode;
       }
     }
-}
+
 class treeBuildCheck{
     public static void main(String[] args) {
-        TreeBuild t=new TreeBuild();
-        t.add(1);
-        t.add(2);
-        t.add(4);
-        t.add(-1);
-        t.add(-1);
-        t.add(5);
-        t.add(-1);
-        t.add(-1);
-        t.add(3);
-        t.add(-1);
-        t.add(6);
-        t.add(-1);
-        t.add(-1);
+        TreeBuildRecursive t=new TreeBuildRecursive();
+    int[] a ={1,2,4,-1,-1,3,-1,6,-1,6,-1,-1};
+    t.TreeBuild(a);
 
 
 
