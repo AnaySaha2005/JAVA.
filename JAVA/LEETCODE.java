@@ -276,18 +276,21 @@ public class LEETCODE {
 
         public static String reverseWords(String s){
             StringBuilder str =new StringBuilder();
-            str.append(s.charAt(0));
-            for(int i=1;i<s.length();i++){
-                if(s.charAt(i)==' '){
-                    if(s.charAt(i-1)==' ')
+
+            for(int i=0;i<s.length();i++){
+                if(s.charAt(i)==' ') {
+                    if(i==0)
                         continue;
+                    if(i==str.length()-1)
+                    if (s.charAt(i - 1) == ' ')
+                        continue;
+                    str.append(s.charAt(i));
+                }
                     else str.append(s.charAt(i));
 
-                }
-                str.append(s.charAt(i));
             }
             s=str.toString();
-   str=new StringBuilder();
+        str=new StringBuilder();
         s=" "+s;
         s=s+" ";
         int space1=s.length()-1,space2=space1-1;
@@ -306,7 +309,7 @@ public class LEETCODE {
         }
     
         public static void main(String[] args) {
-      String s="the sky is blue";
+      String s="  the sky is blue  ";
             System.out.println(s);
             System.out.println(reverseWords(s));
          }
