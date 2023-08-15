@@ -146,20 +146,42 @@ public class Trees {
              }
          }
      }
- public int getHeight(Node temp){
-         if(temp.leftlink==null)
+     int height=0;
+
+ public int getHeight(Node temp,int tempheight){
+     if(temp==null){
+         return tempheight;
+     }
+         if(temp.left==null&&temp.right==null){
+             if(height<tempheight)
+                 height=tempheight;
+             return tempheight;
+         }
+         getHeight(temp.left,tempheight+1);
+         getHeight(temp.right,tempheight+1);
+      return height;
  }
 
-
+     public int CountNodes(Node temp){
+         if(temp==null){
+             return 0;
+         }
+      return CountNodes(temp.left)+CountNodes(temp.right)+1;
+     }
+     public int SumNodes(Node temp){
+         if(temp==null){
+            return 0;
+         }
+        return temp.data+SumNodes(temp.left)+SumNodes(temp.right);
+     }
  }
 
 class treeBuildCheck{
     public static void main(String[] args) {
         TreeBuildRecursive t=new TreeBuildRecursive();
-    int[] a ={1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
+    int[] a ={1,2,4,-1,-1,5,-1,6,-1,7,-1,-1,3,-1,-1};
    TreeBuildRecursive.Node root= t.TreeBuild(a);
-        t.binaryTreePrintLevelOrder(root);
-
+        System.out.println(t.CountNodes(root));
 
     }
 }

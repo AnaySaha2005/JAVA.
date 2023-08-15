@@ -169,15 +169,136 @@ public class LEETCODE {
       return speed;
 
      }
-   
-        
+     public static void gameOfLife(int [][] board){
+        int pointer1=0;
+        int pointer2=0;
+        int row=board.length;
+        int column=board[0].length;
+         int[][]b=new int[row][column];
+
+         while(pointer1<row){
+            b[pointer1][pointer2]=check(board,pointer1,pointer2);
+                    pointer2++;
+            if(pointer2==column){
+                pointer2=0;
+                pointer1++;
+            }
+        }
+         pointer2 =0;pointer1=0;
+         while(pointer1<row){
+           board[pointer1][pointer2]=b[pointer1][pointer2];
+             pointer2++;
+             if(pointer2==column){
+                 pointer2=0;
+                 pointer1++;
+             }
+         }
+
+     }
+    public static int check(int a[][],int i,int j){
+        if(a[i][j]==0){
+            int count=0;
+            if(i-1>-1&&j-1>-1){
+                if(a[i-1][j-1]==1)
+                    count++;
+            }
+            if(i-1>-1&&j+1<a[0].length){
+                if(a[i-1][j+1]==1)
+                    count++;
+            }
+            if(i-1>-1){
+                if(a[i-1][j]==1)
+                    count++;
+            }
+            if(i+1<a[0].length){
+                if(a[i+1][j]==1)
+                    count++;
+            }
+            if(j-1>-1){
+                if(a[i][j-1]==1)
+                    count++;
+            }
+            if(j+1<a[0].length){
+                if(a[i][j+1]==1)
+                    count++;
+            }
+            if(j-1>-1&&i+1<a.length){
+                if(a[i+1][j-1]==1)
+                    count++;
+            }
+            if(j+1<a[0].length&&i+1<a.length){
+                if(a[i+1][j+1]==1)
+                    count++;
+            }
+            if(count==3)
+                return 1;
+        }
+       if(a[i][j]==1){
+         int count=0;
+         if(i-1>-1&&j-1>-1){
+             if(a[i-1][j-1]==1)
+                 count++;
+         }
+         if(i-1>-1&&j+1<a[0].length){
+             if(a[i-1][j+1]==1)
+                 count++;
+         }
+         if(i-1>-1){
+             if(a[i-1][j]==1)
+                 count++;
+         }
+         if(i+1<a[0].length){
+             if(a[i+1][j]==1)
+                 count++;
+         }
+         if(j-1>-1){
+             if(a[i][j-1]==1)
+                 count++;
+         }
+         if(j+1<a[0].length){
+             if(a[i][j+1]==1)
+                 count++;
+         }
+         if(j-1>-1&&i+1<a.length){
+             if(a[i+1][j-1]==1)
+                 count++;
+         }
+         if(j+1<a[0].length&&i+1<a.length){
+             if(a[i+1][j+1]==1)
+                 count++;
+         }
+         if(count==3||count==2)
+             return 1;
+
+     }
+       return 0;
+        }
+
+        public static String reverseWords(String s){
+        s=" "+s;
+        s=s+" ";
+        StringBuilder str =new StringBuilder();
+        int space1=s.length()-1,space2=space1-1;
+        while(space2>=0){
+            if(s.charAt(space2)!=' '){
+                space2--;
+                continue;
+            }
+            str.append(s, space2+1, space1);
+            if(space2!=0)
+                str.append(" ");
+            space1=space2;
+            space2--;
+        }
+       return str.toString();
+        }
     
         public static void main(String[] args) {
-         int a[]={1,3,2};
-         System.out.println(minSpeedOnTime(a, 2.70));
-           
+      String s="the sky is blue";
+            System.out.println(reverseWords(s));
+         }
         }
-      }
+
     
     
     
