@@ -1,4 +1,4 @@
-import java.util.TreeSet;
+import java.util.*;
 
 public class Trees {
 }
@@ -66,72 +66,89 @@ public class Trees {
 
     }
 
- class TreeBuildRecursive{
-    public static class Node {
-        int data;
-        Node left;
-        Node right;
+ class TreeBuildRecursive {
+     public static class Node {
+         int data;
+         Node left;
+         Node right;
 
-        Node(int data) {
-            this.data = data;
-            right = null;
-            left = null;
-        }
-    }
-    static Node root=null;
-      static int idx=-1;
-      public Node TreeBuild(int[] a){
-          idx++;
-          if(a[idx]==-1){
-              return null;
-          }
-          Node newNode= new Node(a[idx]);
-          newNode.left= TreeBuild(a);
-          newNode.right= TreeBuild(a);
-          root=newNode;
-          return newNode;
-      }
+         Node(int data) {
+             this.data = data;
+             right = null;
+             left = null;
+         }
+     }
 
-      public void binaryTreePrintPreOrder(Node temp){
-          if(temp==null)
-              return;
-          System.out.print(temp.data+"  ");
-          binaryTreePrintPreOrder(temp.left);
-          binaryTreePrintPreOrder(temp.right);
+     static Node root = null;
+     static int idx = -1;
+
+     public Node TreeBuild(int[] a) {
+         idx++;
+         if (a[idx] == -1) {
+             return null;
+         }
+         Node newNode = new Node(a[idx]);
+         newNode.left = TreeBuild(a);
+         newNode.right = TreeBuild(a);
+         root = newNode;
+         return newNode;
+     }
+
+     public void binaryTreePrintPreOrder(Node temp) {
+         if (temp == null)
+             return;
+         System.out.print(temp.data + "  ");
+         binaryTreePrintPreOrder(temp.left);
+         binaryTreePrintPreOrder(temp.right);
 
 
-      }
-     public void binaryTreePrintInOrder(Node temp){
-         if(temp==null)
+     }
+
+     public void binaryTreePrintInOrder(Node temp) {
+         if (temp == null)
              return;
 
          binaryTreePrintInOrder(temp.left);
-         System.out.print(temp.data+"  ");
+         System.out.print(temp.data + "  ");
          binaryTreePrintInOrder(temp.right);
 
 
      }
-     public void binaryTreePrintPostOrder(Node temp){
-         if(temp==null)
+
+     public void binaryTreePrintPostOrder(Node temp) {
+         if (temp == null)
              return;
          binaryTreePrintPostOrder(temp.left);
          binaryTreePrintPostOrder(temp.right);
-         System.out.print(temp.data+"  ");
+         System.out.print(temp.data + "  ");
      }
-     public void binaryTreePrintLevelOrder(Node temp){
-          if(temp==root){
-              System.out.println(root.data+"  ");}
-          if(temp==null){
-              return;}
-         if(temp.left!=null){
-             System.out.print(temp.left.data+"  ");}
-         if(temp.right!=null) {
-             System.out.print(temp.right.data+"  ");}
 
-         binaryTreePrintLevelOrder(temp.left);
-         binaryTreePrintLevelOrder(temp.right);
+     public void binaryTreePrintLevelOrder(Node temp) {
+         Queue<Node> q = new LinkedList<>();
+         q.add(root);
+         q.add(null);
+         while (!q.isEmpty()) {
+             Node currNode = q.remove();
+             if (currNode == null) {
+                 System.out.println();
+                 if (q.isEmpty()) break;
+                 else q.add(null);
+             }
+             else {
+                 System.out.print(currNode.data + "  ");
 
+                 if (currNode.left != null)
+                     q.add(currNode.left);
+
+                 if (currNode.right != null) {
+                     q.add(currNode.right);
+                 }
+             }
+         }
      }
+ public int getHeight(Node temp){
+         if(temp.leftlink==null)
+ }
 
 
  }
