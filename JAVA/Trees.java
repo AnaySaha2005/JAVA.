@@ -1,8 +1,6 @@
 import java.util.*;
-
 public class Trees {
-   static  class TreeBuild {
-        public static class Node {
+        public static  class Node {
             int data;
             Node left;
             Node right;
@@ -17,7 +15,7 @@ public class Trees {
         static Node root = null;
         static int idx = -1;
 
-        public Node TreeBuild(int[] a) {
+        public static  Node TreeBuild(int[] a) {
             idx++;
             if (a[idx] == -1) {
                 return null;
@@ -29,7 +27,7 @@ public class Trees {
             return newNode;
         }
 
-        public void binaryTreePrintPreOrder(Node temp) {
+        public  static void binaryTreePrintPreOrder(Node temp) {
             if (temp == null)
                 return;
             System.out.print(temp.data + "  ");
@@ -39,7 +37,7 @@ public class Trees {
 
         }
 
-        public void binaryTreePrintInOrder(Node temp) {
+        public static  void binaryTreePrintInOrder(Node temp) {
             if (temp == null)
                 return;
 
@@ -50,7 +48,7 @@ public class Trees {
 
         }
 
-        public void binaryTreePrintPostOrder(Node temp) {
+        public  static void binaryTreePrintPostOrder(Node temp) {
             if (temp == null)
                 return;
             binaryTreePrintPostOrder(temp.left);
@@ -58,7 +56,7 @@ public class Trees {
             System.out.print(temp.data + "  ");
         }
 
-        public void binaryTreePrintLevelOrder(Node temp) {
+        public  static void binaryTreePrintLevelOrder(Node temp) {
             Queue<Node> q = new LinkedList<>();
             q.add(root);
             q.add(null);
@@ -81,9 +79,9 @@ public class Trees {
                 }
             }
         }
-        int height=0;
+    static  int   height=0;
 
-        public int getHeight(Node temp, int tempheight){
+        public static  int getHeight(Node temp, int tempheight){
             if(temp==null){
                 return tempheight;
             }
@@ -97,19 +95,19 @@ public class Trees {
             return height+1;
         }
 
-        public int CountNodes(Node temp){
+        public  static int CountNodes(Node temp){
             if(temp==null){
                 return 0;
             }
             return CountNodes(temp.left)+CountNodes(temp.right)+1;
         }
-        public int SumNodes(Node temp){
+        public  static int SumNodes(Node temp){
             if(temp==null){
                 return 0;
             }
             return temp.data+SumNodes(temp.left)+SumNodes(temp.right);
         }
-        public int getDiameter(Node newNode){
+        public static  int getDiameter(Node newNode){
             if(newNode==null){
                 return 0;
             }
@@ -120,16 +118,60 @@ public class Trees {
             int self=lh+rh+1;
             return rd>ld? Math.max(rd, self) : Math.max(ld, self);
         }
-    }
+        static class Info{
+            int d;
+            int h;
+            Info(int d,int h){
+           this.d=d;
+           this.h=h;
+            }
+        }
+        public static Info getDiameterOptimum(Node newNode){
+            if(newNode==null){
+                return new Info(0,0);
+            }
+
+            Info leftInfo=getDiameterOptimum(newNode.left);
+            Info rightInfo=getDiameterOptimum(newNode.right);
+            int dia=Math.max(Math.max(leftInfo.d,rightInfo.d),leftInfo.h+rightInfo.h+1);
+          int ht=Math.max(leftInfo.h,rightInfo.h)+1;
+          return new Info(dia,ht);
+        }
+        public static   boolean checkSubTree(Node root1,Node root2){
+
+            if(root1==null||root2==null){
+                return root1 == null && root2 == null;
+            }
+         if(root1.data!=root2.data){
+             checkSubTree(root1.left,root2);
+             checkSubTree(root1.right,root2);
+             return false;
+         }
+         else{
+           boolean b1=  checkSubTree(root1.left,root2.left);
+           boolean b2=  checkSubTree(root1.right,root2.right);
+             return b1&&b2;
+         }
+
+        }
 
 
-}
-class treeBuildCheck{
     public static void main(String[] args) {
-        Trees.TreeBuild t=new Trees.TreeBuild();
-        int[] a ={1,2,4,-1,-1,5,-1,6,-1,-1,3,-1,-1};
-        Trees.TreeBuild.Node root= t.TreeBuild(a);
-        System.out.println(t.getDiameter(root));
+      Node root=new Node(1);
+      root.left=new Node(2);
+        root.left.left=new Node(4);
+        root.left.right=new Node(5);
+        root.right=new Node(3);
+        root.right.right=new Node(6);
+        Node subroot=new Node(2);
+        root.left=new Node(4);
+        root.right=new Node(5);
+
+         System.out.println(checkSubTree(root,subroot));
 
     }
+
 }
+
+
+
