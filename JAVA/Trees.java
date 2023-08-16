@@ -1,71 +1,7 @@
 import java.util.*;
 
 public class Trees {
-   static  class TreeBuild{
-        public static class Node {
-            public int data;
-            public Node leftlink;
-            public Node rightlink;
-            public Node prelink;
-            public int count;
-            Node(int data) {
-                this.data = data;
-                leftlink = null;
-                rightlink = null;
-                prelink=null;
-                count=0;
-            }
-        }
-
-        public static Node pointer;
-        public  static Node root;
-
-        public void add(int data){
-            if(root==null) {
-                root=new Node(data);
-                pointer=root;
-            }
-            else if(data==-1){
-                if(pointer.count==0){
-                    pointer.leftlink=null;
-                    pointer.count++;
-                }
-                else if(pointer.count==1){
-                    pointer.rightlink=null;
-                    pointer.count++;
-                }
-            }
-            else if(pointer.count==0)
-            {
-                pointer.count++;
-                Node temp =new Node(data);
-                pointer.leftlink=temp;
-                temp.prelink=pointer;
-                pointer=temp;
-
-            }
-            else if(pointer.count==1)
-            {
-                pointer.count++;
-                Node temp =new Node(data);
-                pointer.rightlink=temp;
-                temp.prelink=pointer;
-                pointer=temp;
-
-            }
-            else
-            {
-                pointer=pointer.prelink;
-                add(data);
-
-            }
-
-
-        }
-
-    }
-
-   static  class TreeBuildRecursive {
+   static  class TreeBuild {
         public static class Node {
             int data;
             Node left;
@@ -158,7 +94,7 @@ public class Trees {
             }
             getHeight(temp.left,tempheight+1);
             getHeight(temp.right,tempheight+1);
-            return height;
+            return height+1;
         }
 
         public int CountNodes(Node temp){
@@ -190,9 +126,9 @@ public class Trees {
 }
 class treeBuildCheck{
     public static void main(String[] args) {
-        Trees.TreeBuildRecursive t=new Trees.TreeBuildRecursive();
-        int[] a ={1,2,4,-1,-1,5,-1,6,-1,7,-1,-1,3,-1,-1};
-        Trees.TreeBuildRecursive.Node root= t.TreeBuild(a);
+        Trees.TreeBuild t=new Trees.TreeBuild();
+        int[] a ={1,2,4,-1,-1,5,-1,6,-1,-1,3,-1,-1};
+        Trees.TreeBuild.Node root= t.TreeBuild(a);
         System.out.println(t.getDiameter(root));
 
     }
