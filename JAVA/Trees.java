@@ -137,21 +137,37 @@ public class Trees {
           int ht=Math.max(leftInfo.h,rightInfo.h)+1;
           return new Info(dia,ht);
         }
-        public static   boolean checkSubTree(Node root1,Node root2){
-
-            if(root1==null||root2==null){
-                return root1 == null && root2 == null;
+        public static boolean isIdentical(Node root ,Node subroot){
+          if(root==null||subroot==null) {
+              return root == null && subroot == null;
+          }
+            if(root.data!=subroot.data) {
+                return false;
             }
-         if(root1.data!=root2.data){
-             checkSubTree(root1.left,root2);
-             checkSubTree(root1.right,root2);
-             return false;
+           else {
+                boolean leftIdentical = isIdentical(root.left, subroot.left);
+                boolean rightIdentical = isIdentical(root.right, subroot.right);
+                return leftIdentical && rightIdentical;
+            }
+        }
+        public static   boolean isSubTree(Node root,Node subroot){
+            if(root==null)
+                return false ;
+            if(root.data==subroot.data){
+                return isIdentical(root,subroot);
+            }
+            return isSubTree(root.left,subroot)||isSubTree(root.right,subroot);
+        }
+      static HashMap<Integer,Node> hd=new HashMap<>();
+        public static void topView(Node root,int h){
+         if(root==null){
+             return;
          }
-         else{
-           boolean b1=  checkSubTree(root1.left,root2.left);
-           boolean b2=  checkSubTree(root1.right,root2.right);
-             return b1&&b2;
+         if(hd.get(h)!=null) {
+             hd.put(h, root);
          }
+         topView(root.left,h-1);
+         topView(root.right,h+1);
 
         }
 
@@ -166,10 +182,7 @@ public class Trees {
 
         root.right=new Node(3);
         root.right.right=new Node(6);
-        Node subroot=new Node(2);
-        subroot.left=new Node(4);
-        subroot.right=new Node(5);
-        System.out.println(checkSubTree(root,subroot));
+       topView(root,0);
 
 
     }
