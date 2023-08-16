@@ -158,17 +158,45 @@ public class Trees {
             }
             return isSubTree(root.left,subroot)||isSubTree(root.right,subroot);
         }
-      static HashMap<Integer,Node> hd=new HashMap<>();
-        public static void topView(Node root,int h){
-         if(root==null){
-             return;
-         }
-         if(hd.get(h)!=null) {
-             hd.put(h, root);
-         }
-         topView(root.left,h-1);
-         topView(root.right,h+1);
 
+     static class Infohd{
+            Node node;
+            int hd;
+            Infohd(Node node,int hd){
+                this.node=node;
+                this.hd=hd;
+            }
+     }
+        public static void topView(Node root){
+        Queue<Infohd>q=new LinkedList<>();
+             HashMap<Integer,Node> map=new HashMap<>();
+            int max=0;int min=0;
+            q.add(new Infohd(root,0));
+            q.add(null);
+            while(!q.isEmpty()){
+                Infohd curr=q.remove();
+               if(curr==null)
+               {
+                   if( q.isEmpty())
+                   break;
+                  else q.add(null);
+               }
+
+               if(!map.containsKey(curr.hd)){
+                   map.put(curr.hd,curr.node);
+               }
+               if(curr.node.left!=null){
+                   q.add(new Infohd(curr.node.left,curr.hd-1));
+                   min=Math.min(curr.hd-1,min);
+               }
+                if(curr.node.right!=null){
+                    q.add(new Infohd(curr.node.right,curr.hd+1));
+                max=Math.max(curr.hd+1,max);
+                }
+            }
+            for(int i=min;i<=max;i++) {
+                System.out.println(map.get(i));
+            }
         }
 
 
@@ -182,8 +210,7 @@ public class Trees {
 
         root.right=new Node(3);
         root.right.right=new Node(6);
-       topView(root,0);
-
+       topView(root);
 
     }
 
