@@ -173,15 +173,27 @@ public class Trees {
             }
             return temp.data+SumNodes(temp.left)+SumNodes(temp.right);
         }
+        public int getDiameter(Node newNode){
+            if(newNode==null){
+                return 0;
+            }
+            int ld=getDiameter(newNode.left);
+            int rd=getDiameter(newNode.right);
+            int lh=getHeight(newNode.left,0);
+            int rh=getHeight(newNode.right,0);
+            int self=lh+rh+1;
+            return rd>ld? Math.max(rd, self) : Math.max(ld, self);
+        }
     }
 
-    static class treeBuildCheck{
-        public static void main(String[] args) {
-            TreeBuildRecursive t=new TreeBuildRecursive();
-            int[] a ={1,2,4,-1,-1,5,-1,6,-1,7,-1,-1,3,-1,-1};
-            TreeBuildRecursive.Node root= t.TreeBuild(a);
-            System.out.println(t.CountNodes(root));
 
-        }
+}
+class treeBuildCheck{
+    public static void main(String[] args) {
+        Trees.TreeBuildRecursive t=new Trees.TreeBuildRecursive();
+        int[] a ={1,2,4,-1,-1,5,-1,6,-1,7,-1,-1,3,-1,-1};
+        Trees.TreeBuildRecursive.Node root= t.TreeBuild(a);
+        System.out.println(t.getDiameter(root));
+
     }
 }
