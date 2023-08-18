@@ -279,6 +279,55 @@ public class Trees {
        }
        return root;
     }
+
+    public static int getdistace(Node root,int n){
+            if(root==null)
+                return 0;
+            if(root.data==n)
+                return 1;
+        int leftdist=getdistace(root.left,n);
+        int rightdist=getdistace(root.right,n);
+
+        if(leftdist>0||rightdist>0) {
+            return leftdist + rightdist + 1;
+        }
+        return leftdist+rightdist;
+
+
+    }
+
+
+    public static int shortestDistance2(Node root,int n1,int n2){
+    Node  lcaroot= getLowestCommonAncestor2(root,n1,n2);
+      int dist1=getdistace(lcaroot,n1)-1;
+      int dist2=getdistace(lcaroot,n2)-1;
+      if(lcaroot.data==n1)
+          dist1=0;
+        if(lcaroot.data==n2)
+            dist2=0;
+      return dist1+dist2;
+
+    }
+    public static  Node KthAncestor(Node root,int n,int k){
+       if(root==null)
+           return null;
+       if(root.data==n){
+           return root;
+       }
+       if(k==0){
+           return root;
+       }
+       if(null!=KthAncestor(root.left,n,k)){
+           k--;
+           return root;
+       }
+        if(null!=KthAncestor(root.right,n,k)){
+            k--;
+            return root;
+        }
+       return null;
+    }
+
     public static void main(String[] args) {
       Node root=new Node(1);
       root.left=new Node(2);
@@ -290,7 +339,7 @@ public class Trees {
         root.right=new Node(3);
         root.right.right=new Node(7);
         root.right.left=new Node(6);
-        System.out.println(getLowestCommonAncestor2(root,4,7).data);
+        System.out.println(KthAncestor(root,5,1).data);
 
     }
 
