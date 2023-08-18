@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 public class Trees {
         public static  class Node {
@@ -177,29 +178,107 @@ public class Trees {
                 Infohd curr=q.remove();
                if(curr==null)
                {
-                   if( q.isEmpty())
-                   break;
-                  else q.add(null);
+                   if( q.isEmpty()) {
+                       break;
+                   }
+                   q.add(null);
                }
-
-               if(!map.containsKey(curr.hd)){
-                   map.put(curr.hd,curr.node);
+           else {
+                   if (!map.containsKey(curr.hd)) {
+                       map.put(curr.hd, curr.node);
+                   }
+                   if (curr.node.left != null) {
+                       q.add(new Infohd(curr.node.left, curr.hd - 1));
+                       min = Math.min(curr.hd - 1, min);
+                   }
+                   if (curr.node.right != null) {
+                       q.add(new Infohd(curr.node.right, curr.hd + 1));
+                       max = Math.max(curr.hd + 1, max);
+                   }
                }
-               if(curr.node.left!=null){
-                   q.add(new Infohd(curr.node.left,curr.hd-1));
-                   min=Math.min(curr.hd-1,min);
-               }
-                if(curr.node.right!=null){
-                    q.add(new Infohd(curr.node.right,curr.hd+1));
-                max=Math.max(curr.hd+1,max);
-                }
             }
             for(int i=min;i<=max;i++) {
-                System.out.println(map.get(i));
+                System.out.print(map.get(i).data+"  ");
             }
         }
+    public  static void Kthlevel(Node temp,int level) {
+        Queue<Node> q = new LinkedList<>();
+        int k=1;
+        q.add(temp);
+        q.add(null);
+        while (!q.isEmpty()) {
+            Node currNode = q.remove();
+            if (currNode == null) {
+                if(k==level-1)
+                    System.out.println();
+                k++;
+                if (q.isEmpty()) break;
+                else q.add(null);
+            }
+            else {
+                if(k==level) {
+                    System.out.print(currNode.data + "  ");
+                }
 
+                if (currNode.left != null)
+                    q.add(currNode.left);
 
+                if (currNode.right != null) {
+                    q.add(currNode.right);
+                }
+            }
+        }
+    }
+    public static boolean getPath(Node root, int data, ArrayList<Integer>a){
+            if(root==null)
+                return false;
+
+           if(root.data==data) {
+               a.add(root.data);
+               return true;
+           }
+            if(getPath(root.left,data,a)){
+                a.add(root.data);
+                return true;
+            }
+           if(getPath(root.right,data,a)){
+
+               a.add(root.data);
+               return true;
+           }
+           return false;
+    }
+    public static void getLowestCommonAncestor(Node root,int n1,int n2){
+            ArrayList<Integer>a1=new ArrayList<>();
+            ArrayList<Integer>a2=new ArrayList<>();
+            getPath(root,n1,a1);
+            getPath(root,n2,a2);
+            int lca=-1;
+        System.out.println(a1);
+        System.out.println(a2);
+           while(!a1.isEmpty()&&!a2.isEmpty()){
+               n1=a1.remove(a1.size()-1);
+               n2=a2.remove(a2.size()-1);
+               if(n1==n2){
+                   lca=n1;
+                }
+            }
+          System.out.println(lca);
+    }
+    public static Node getLowestCommonAncestor2(Node root,int n1,int n2){
+       if(root==null||root.data==n1||root.data==n2){
+           return root;
+       }
+       Node leftRoot=getLowestCommonAncestor2(root.left,n1,n2);
+       Node rightRoot=getLowestCommonAncestor2(root.right,n1,n2);
+       if(leftRoot==null){
+           return rightRoot;
+       }
+       if(rightRoot==null){
+           return leftRoot;
+       }
+       return root;
+    }
     public static void main(String[] args) {
       Node root=new Node(1);
       root.left=new Node(2);
@@ -209,8 +288,9 @@ public class Trees {
         root.left.right=new Node(5);
 
         root.right=new Node(3);
-        root.right.right=new Node(6);
-       topView(root);
+        root.right.right=new Node(7);
+        root.right.left=new Node(6);
+        System.out.println(getLowestCommonAncestor2(root,4,7).data);
 
     }
 
