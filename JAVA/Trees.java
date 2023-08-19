@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.*;
 public class Trees {
         public static  class Node {
@@ -308,26 +309,41 @@ public class Trees {
       return dist1+dist2;
 
     }
-    public static  Node KthAncestor(Node root,int n,int k){
+    public static  int KthAncestor(Node root,int n,int k){
        if(root==null)
-           return null;
-       if(root.data==n){
-           return root;
+           return -1;
+       if(root.data==n)
+           return 0;
+       int leftdist=KthAncestor(root.left,n,k);
+       int rightdist=KthAncestor(root.right,n,k);
+       if(leftdist==-1&&rightdist==-1)
+           return -1;
+       if(leftdist==-1){
+           if(rightdist+1==k)
+               System.out.println(root.data);
+           return rightdist+1;
        }
-       if(k==0){
-           return root;
+       else {
+           if(leftdist+1==k)
+               System.out.println(root.data);
+           return leftdist+1;
        }
-       if(null!=KthAncestor(root.left,n,k)){
-           k--;
-           return root;
-       }
-        if(null!=KthAncestor(root.right,n,k)){
-            k--;
-            return root;
-        }
-       return null;
     }
+    public static void sumTree(Node root)
+    {
+        if(root==null)
+            return;
+        root.data=sumNode(root)- root.data;
+        sumTree(root.left);
+        sumTree(root.right);
+    }
+     public static int sumNode(Node root){
+            if(root==null)
+                return 0;
+return sumNode(root.right)+sumNode(root.left)+root.data;
 
+
+}
     public static void main(String[] args) {
       Node root=new Node(1);
       root.left=new Node(2);
@@ -339,7 +355,8 @@ public class Trees {
         root.right=new Node(3);
         root.right.right=new Node(7);
         root.right.left=new Node(6);
-        System.out.println(KthAncestor(root,5,1).data);
+       sumTree(root);
+        System.out.println(root.left.left.data);
 
     }
 
