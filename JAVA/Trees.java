@@ -1,8 +1,10 @@
+import com.sun.source.tree.Tree;
+
 import java.lang.reflect.Array;
 import java.sql.SQLOutput;
 import java.util.*;
 public class Trees {
-  class BinaryTree {
+    class BinaryTree {
         public static class Node {
             int data;
             Node left;
@@ -422,35 +424,42 @@ public class Trees {
         }
 
 
-
     }
-   class BinarySearchTrees{
-      public static class Node {
-       int data;
-       Node left;
-      Node right;
+}
+   class BinarySearchTrees {
+       public static class Node {
+           int data;
+           Node left;
+           Node right;
 
-       Node(int data) {
-           this.data = data;
-           right = null;
-           left = null;
+           Node(int data) {
+               this.data = data;
+               right = null;
+               left = null;
+           }
        }
-   }
 
-       static Node root = null;
        static int idx = -1;
 
-       public static Node TreeBuild(int[] a) {
-           idx++;
-           if (a[idx] == -1) {
-               return null;
+       public static Node TreeBuild(int[] a,Node root) {
+           root = new Node(a[0]);
+           for (int i = 1; i < a.length; i++) {
+               Node temp = root, temp2 = null;
+               while (temp != null) {
+                   temp2 = temp;
+                   if (temp.data < a[i])
+                       temp = temp.right;
+                   else
+                       temp = temp.left;
+               }
+               if (temp2.data < a[i])
+                   temp2.right = new Node(a[i]);
+               else temp2.left = new Node(a[i]);
+
            }
-           Node newNode = new Node(a[idx]);
-           newNode.left = TreeBuild(a);
-           newNode.right = TreeBuild(a);
-           root = newNode;
-           return newNode;
+             return root;
        }
+
 
        public static void binarySearchTreePrintPreOrder(Node temp) {
            if (temp == null)
@@ -481,12 +490,12 @@ public class Trees {
            System.out.print(temp.data + "  ");
        }
 
-       public static void binarySearchTreePrintLevelOrder(Node temp) {
+       public static void binarySearchTreePrintLevelOrder(Node root) {
            Queue<Node> q = new LinkedList<>();
            q.add(root);
            q.add(null);
            while (!q.isEmpty()) {
-              Node currNode = q.remove();
+               Node currNode = q.remove();
                if (currNode == null) {
                    System.out.println();
                    if (q.isEmpty()) break;
@@ -504,32 +513,122 @@ public class Trees {
            }
        }
 
-      public static int Search(Node root,int n){
-           if(root==null)
-               return -1;
-           if(root.data==n)
-               return 1;
-           if(root.data<n){
-               return Search(root.right,n);
+       public static Node search(Node root, int n) {
+           if (root == null)
+               return null;
+           if (root.data == n)
+               return root;
+           if (root.data < n) {
+               return search(root.right, n);
            }
-           return Search(root.left,n);
-      }
+           return search(root.left, n);
+       }
+ public static Node delete(Node root,int data){
+           Node universalroot=root;
+           Node node=search(root,data);
+           if(node==root)
+           {   Node temp=root.right;
+               Node temp2=null;
+               while(temp.left!=null) {
+               temp2=temp;
+               temp = temp.left;
+           }
+               if(temp==root.right){
+                   root.right.left=root.left;
+                   root=root.right;
+               }
+               else{
+                   root.data=temp.data;
+                   temp2.left=null;
+               }
+               return root;
+           }
+           else{
+           Node prevnode=root;
+           while(root.data!=node.data){
+               prevnode=root;
+               if(root.data<node.data)
+                   root=root.right;
+               else root=root.left;
+           }
+     //case 1
+       if(node.right==null&&node.left==null)
+         {
+             if(prevnode.data<node.data){
+                 prevnode.right=null;
+             }
+            else prevnode.left=null;
+         }
+       // case 2
+        else if(node.left==null){
+           if(prevnode.data>node.data){
+               prevnode.left=node.right;
+           }
+         else  prevnode.right=node.right;
+       }
+       else if(node.right==null){
+           if(prevnode.data>node.data){
+               prevnode.left=node.left;
+           }
+          else prevnode.right=node.left;
+       }
+       else {
+           Node temp2 = root;
+           root = node.right;
+           while (root.left != null) {
+               temp2 = root;
+               root = root.left;
+           }
+           if (root.data != node.right.data) {
+               node.data = root.data;
+               temp2.left = null;
+           } else {
+               if (prevnode.data > node.data) {
+                   Node temp3 = node;
+                   prevnode.left = temp3.right;
+                   temp3.right.left = temp3.left;
+
+               } else {
+                   Node temp3 = node;
+                   prevnode.right = temp3.right;
+                   temp3.left = temp3.right.left;
+               }
+
+           }
+
+       }
+
+       }
+     return universalroot;
+ }
+ public static void printRange(Node root,int k1,int k2){
+           if(root==null)
+               return;
+           if(root.data>=k1&&root.data<=k2) {
+               System.out.println(root.data);
+               printRange(root.left,k1,k2);
+               printRange(root.right,k1,k2);
+           }
+         else  if(root.data<k1){
+               printRange(root.right,k1,k2);
+           }
+         else  if(root.data>k2){
+               printRange(root.left,k1,k2);
+           }
+ }
+
+
+       public static void main(String[] args) {
+           int a[] = {8,5,3,1,4,6,10,11,14};
+      Node root=null;
+      root=TreeBuild(a,root);
+    binarySearchTreePrintInOrder(root);
+           System.out.println();
+         printRange(root,5,12);
+       }
 
    }
-    public static void main(String[] args) {
- BinarySearchTrees.Node root=new BinarySearchTrees.Node(4);
- root.right=new BinarySearchTrees.Node(5);
-        root.right.right=new BinarySearchTrees.Node(6);
-        root.left=new BinarySearchTrees.Node(2);
-        root.left.left=new BinarySearchTrees.Node(1);
-        root.left.right=new BinarySearchTrees.Node(3);
-       BinarySearchTrees.binarySearchTreePrintInOrder(root);
 
-
-    }
-
-
-}
 
 
 
