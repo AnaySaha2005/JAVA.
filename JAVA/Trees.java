@@ -1,8 +1,7 @@
-import com.sun.source.tree.Tree;
 
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
+import javax.imageio.plugins.tiff.GeoTIFFTagSet;
 import java.util.*;
+
 public class Trees {
     class BinaryTree {
         public static class Node {
@@ -617,14 +616,121 @@ public class Trees {
            }
  }
 
+   public static void rootToLeafPaths(Node root,String path){
+           if(root==null)
+               return;
+           if(root.left==null&&root.right==null) {
+             path=path+root.data;
+               System.out.println(path);
+               return;
+           }
+            path=path+root.data+"-";
+           rootToLeafPaths(root.left,path);
+           rootToLeafPaths(root.right,path);
+
+   }
+   public static boolean isValidBST(Node root,Node min,Node max){
+          if(root==null)
+              return true;
+          if(max!=null&min!=null){
+            if(min.data<root.data&&root.data<max.data)
+                return true;
+                return false;
+          }
+
+          return isValidBST(root.left,min,root)&&isValidBST(root.right,root,max);
+
+   }
+       public static Node treeInterchange(Node root) {
+           if (root == null)
+               return null;
+           Node leftNode = treeInterchange(root.left);
+           Node rightNode = treeInterchange(root.right);
+           if (leftNode != null && rightNode != null) {
+               root.left = rightNode;
+               root.right = leftNode;
+               return root;
+           }
+           if (leftNode != null) {
+               root.right = leftNode;
+               root.left = null;
+           }
+           if (rightNode != null) {
+               root.left = rightNode;
+               root.right = null;
+           }
+           return root;
+       }
+       public static Node generateBalancedBST(int[]a,int p1,int p2){
+           if(p1==p2)
+               return new Node(a[p1]);
+           if(p1>p2)
+               return null;
+           Node newNode=new Node(a[(p1+p2)/2]);
+           newNode.left=generateBalancedBST(a,p1,(p1+p2)/2-1);
+           newNode.right=generateBalancedBST(a,(p1+p2)/2+1,p2);
+           return newNode;
+       }
+       public static Node getBalancedBST(Node root){
+            ArrayList <Integer>list=getInOrder(root,new ArrayList<>());
+           int[] a = list.stream().mapToInt(i -> i).toArray();
+
+           root=generateBalancedBST(a,0,a.length-1);
+           return root;
+       }
+
+     public static ArrayList<Integer> getInOrder(Node root,ArrayList<Integer>list){
+           if(root==null)
+               return null;
+           getInOrder(root.left,list);
+           list.add(root.data);
+           getInOrder(root.right,list);
+           return list;
+
+     }
+     public static int getlargestBST(Node root,int max){
+           if(root==null)
+               return 0 ;
+           if(!isValidBST(root,null,null)){
+              int m1= getlargestBST(root.left,max);
+              int m2=getlargestBST(root.right,max);
+              if(m1!=0)
+                  return m1;
+              if(m2!=0)
+                  return m2;
+           }
+           else{
+               int a=getSize(root);
+               if(a>max)
+                   max=a;
+               return max;
+
+
+           }
+           return 0;
+     }
+
+       public static int getSize(Node root) {
+           if(root==null)
+               return 0;
+           return getSize(root.left)+getSize(root.right)+1;
+       }
+
 
        public static void main(String[] args) {
-           int a[] = {8,5,3,1,4,6,10,11,14};
-      Node root=null;
-      root=TreeBuild(a,root);
-    binarySearchTreePrintInOrder(root);
-           System.out.println();
-         printRange(root,5,12);
+      Node root=new Node(50);
+      root.left=new Node(30);
+      root.left.left=new Node(5);
+      root.left.left.right=new Node(20);
+      root.right=new Node(60);
+      root.right.right=new Node(70);
+      root.right.left=new Node(45);
+      root.right.right.right=new Node(80);
+      root.right.right.left=new Node(65);
+      System.out.println(getlargestBST(root,0));
+
+
+
        }
 
    }
