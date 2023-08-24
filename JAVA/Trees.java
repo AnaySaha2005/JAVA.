@@ -1,5 +1,4 @@
 
-import javax.imageio.plugins.tiff.GeoTIFFTagSet;
 import java.util.*;
 
 public class Trees {
@@ -491,6 +490,7 @@ public class Trees {
 
        public static void binarySearchTreePrintLevelOrder(Node root) {
            Queue<Node> q = new LinkedList<>();
+           System.out.println(root.data);
            q.add(root);
            q.add(null);
            while (!q.isEmpty()) {
@@ -632,11 +632,12 @@ public class Trees {
    public static boolean isValidBST(Node root,Node min,Node max){
           if(root==null)
               return true;
-          if(max!=null&min!=null){
-            if(min.data<root.data&&root.data<max.data)
-                return true;
-                return false;
-          }
+         if(min!=null&&root.data<=min.data)
+             return false;
+
+       if(max!=null&&root.data>=max.data)
+           return false;
+
 
           return isValidBST(root.left,min,root)&&isValidBST(root.right,root,max);
 
@@ -672,21 +673,26 @@ public class Trees {
            return newNode;
        }
        public static Node getBalancedBST(Node root){
-            ArrayList <Integer>list=getInOrder(root,new ArrayList<>());
+            ArrayList <Integer>list= getInOrderList(root,new ArrayList<>());
            int[] a = list.stream().mapToInt(i -> i).toArray();
 
            root=generateBalancedBST(a,0,a.length-1);
            return root;
        }
 
-     public static ArrayList<Integer> getInOrder(Node root,ArrayList<Integer>list){
+     public static ArrayList<Integer> getInOrderList(Node root, ArrayList<Integer>list){
            if(root==null)
                return null;
-           getInOrder(root.left,list);
+           getInOrderList(root.left,list);
            list.add(root.data);
-           getInOrder(root.right,list);
+           getInOrderList(root.right,list);
            return list;
 
+     }
+     public static int[] getInorderArray(Node root){
+         ArrayList<Integer>list=  getInOrderList(root,new ArrayList<Integer>());
+         int[] a = list.stream().mapToInt(i -> i).toArray();
+         return a;
      }
      public static int getlargestBST(Node root,int max){
            if(root==null)
@@ -694,10 +700,7 @@ public class Trees {
            if(!isValidBST(root,null,null)){
               int m1= getlargestBST(root.left,max);
               int m2=getlargestBST(root.right,max);
-              if(m1!=0)
-                  return m1;
-              if(m2!=0)
-                  return m2;
+              return Math.max(m1, m2);
            }
            else{
                int a=getSize(root);
@@ -707,7 +710,6 @@ public class Trees {
 
 
            }
-           return 0;
      }
 
        public static int getSize(Node root) {
@@ -715,19 +717,96 @@ public class Trees {
                return 0;
            return getSize(root.left)+getSize(root.right)+1;
        }
+       public static Node mergeBST(Node root1,Node root2){
+           ArrayList<Integer>list1= getInOrderList(root1,new ArrayList<>());
+           ArrayList<Integer>list2= getInOrderList(root2,new ArrayList<>());
 
+           while(list2.size()!=0) {
+               list1.add(list2.remove(0));
+           }
+         int[] a = list1.stream().mapToInt(i -> i).toArray();
+         Arrays.sort(a);
+          return generateBalancedBST(a,0,a.length-1);
+       }
+       public static int sumInTheRange(Node root,int l,int u){
+           if(root==null)
+               return 0;
+           if(root.data>=l&&root.data<=u){
+               return sumInTheRange(root.left,l,u)+sumInTheRange(root.right,l,u)+root.data;
+           }
+         return sumInTheRange(root.left,l,u)+sumInTheRange(root.right,l,u);
+       }
+      public static int minimumAbsoluteDifference(Node root,int k){
+           if(root==null)
+               return -1;
+           int leftmin=minimumAbsoluteDifference(root.left,k);
+           int rightmin=minimumAbsoluteDifference(root.right,k);
+           if(leftmin!=-1&&rightmin!=-1)
+               return Math.min(Math.min(leftmin,rightmin),Math.abs(root.data-k));
+           if(leftmin!=-1)
+              return Math.min(Math.abs(root.data-k),leftmin);
+           if(rightmin!=-1)
+              return  Math.min(Math.abs(root.data-k),rightmin);
+           return Math.abs(root.data-k);
+         }
+      public static int getKthSmallest(Node root,int k){
+           int a[]=getInorderArray(root);
+           return a[k-1];
+        }
+       public static int sumOfNodes(Node root){
+           if(root==null) {
+               return 0;
+           }
+               return sumOfNodes(root.left)+sumOfNodes(root.right)+root.data;
+
+           }
+           public static int getMaxSumOfBSTinBT(Node root){
+
+           if(root==null)
+               return 0;
+           if(isValidBST(root,null,null)){
+              return sumOfNodes(root);
+
+           }
+           return Math.max(getMaxSumOfBSTinBT(root.left),getMaxSumOfBSTinBT(root.right));
+           }
+           public static void getPairs(Node root1,Node root2,int x){
+           int a1[]=getInorderArray(root1);
+           int a2[]=getInorderArray(root2);
+           int p1=a1.length-1;
+           int p2=0;
+           while(p1>=0&&p2<a2.length){
+               if(a1[p1]+a2[p2]==x) {
+                   System.out.println("("+a1[p1] + "," + a2[p2]+")");
+                   p1--;
+               }
+               if(a1[p1]+a2[p2]<x)
+                   p2++;
+               if(a1[p1]+a2[p2]>x)
+                   p1--;
+           }
+           }
 
        public static void main(String[] args) {
-      Node root=new Node(50);
-      root.left=new Node(30);
-      root.left.left=new Node(5);
-      root.left.left.right=new Node(20);
-      root.right=new Node(60);
-      root.right.right=new Node(70);
-      root.right.left=new Node(45);
-      root.right.right.right=new Node(80);
-      root.right.right.left=new Node(65);
-      System.out.println(getlargestBST(root,0));
+           Node root=new Node(5);
+           root.left=new Node(3);
+           root.left.left=new Node(2);
+           root.left.right=new Node(4);
+           root.right=new Node(7);
+           root.right.left  =new Node(6);
+           root.right.right=new Node(8);
+       Node root2=new Node(10);
+       root2.left=new Node(6);
+       root2.left.left=new Node(3);
+       root2.left.right=new Node(8);
+       root2.right=new Node(15);
+       root2.right.left  =new Node(11);
+       root2.right.right=new Node(18);
+           binarySearchTreePrintInOrder(root);
+           System.out.println();
+           System.out.println("the pairs are");
+           getPairs(root,root2,16);
+
 
 
 
