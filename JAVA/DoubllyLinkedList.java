@@ -15,7 +15,7 @@ public class DoubllyLinkedList {
     public static Node tail;
     public static int size;
 
-    // add functions
+    // addminHeap functions
     public void addLast(int data) {
         size++;
         Node node = new Node(data);

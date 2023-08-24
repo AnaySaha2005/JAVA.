@@ -9,7 +9,7 @@ public class PairSum {
             pivot++;
         }
    for(int i=0;i<=pivot;i++){
-       list.add(list.get(i));
+       list.addminHeap(list.get(i));
        }
      for(int i=pivot;i>=0;i--){
        list.remove(i);
