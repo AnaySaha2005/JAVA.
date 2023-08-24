@@ -20,7 +20,7 @@ public class priorityQueue {
         PriorityQueue<Student>pq=new PriorityQueue<>();
         pq.add(new Student("Anay",459));
         pq.add(new Student("Shrija",1));
-        System.out.println( pq.peek().name+"->"+pq.remove().rank);
+        System.out.println( pq.peek().name+"-> "+pq.remove().rank);
         System.out.println( pq.peek().name+"-> "+pq.remove().rank);
     }
 }
