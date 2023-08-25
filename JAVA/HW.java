@@ -61,6 +61,7 @@ public class HW {
       list.remove(list.size()-1);
         System.out.println(list);
     }
+
     public static void main(String[] args) {
         {
           beautifulArrayList(7);
