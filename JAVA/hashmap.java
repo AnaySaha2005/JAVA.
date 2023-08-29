@@ -9,6 +9,7 @@ public class hashmap <k,v>{
             this.value = value;
         }
     }
+      private int  n;
        private LinkedList<Node>[] bucket ;
        private int size;
       public hashmap(){
@@ -21,7 +22,7 @@ public class hashmap <k,v>{
         return Math.abs(key.hashCode())%size;
       }
 
-    private Node getKey(k key,int bucketidx){
+    private Node getPair(k key, int bucketidx){
         for(int i=0;i<bucket[bucketidx].size();i++){
             Node node=bucket[bucketidx].get(i);
             if(node.key==key)
@@ -42,15 +43,14 @@ public class hashmap <k,v>{
          size*=2;
     }
     //ACCESSIBLE FUNCTIONS BY THE USER
-    public void print() {
+    public LinkedList<k> keySet() {
+     LinkedList<k>keys=new LinkedList<>();
           for(int i=0;i<size;i++)
-          {
-             for(int j=0;j<bucket[i].size();j++)
-             {
-                 Node node=bucket[i].get(j);
-                 System.out.print(node.key+","+node.value+"  ");
-             }
+          {LinkedList<Node>ll=bucket[i];
+              for(Node node:ll)
+                  keys.add(node.key);
           }
+          return keys;
     }
     public boolean containsKey(k key){
         int bucketidx=hashing(key);
@@ -63,7 +63,7 @@ public class hashmap <k,v>{
     }
     public void put(k key,v value){
         int bucketidx=hashing(key);
-         Node node=getKey(key,bucketidx);
+         Node node= getPair(key,bucketidx);
          if(node!=null){
              node.value=value;
              return;
@@ -73,17 +73,49 @@ public class hashmap <k,v>{
        double lambda=(double)bucket[bucketidx].size()/size;
          if(lambda>2)
            rehash();
+         n++;
       }
+      public v remove(k key){
+          int bucketidx=hashing(key);
+          for(int i=0;i<bucket[bucketidx].size();i++){
+              Node node=bucket[bucketidx].get(i);
+              if(node.key==key){
+                  bucket[bucketidx].remove(i);
+                  n--;
+                  return node.value;
+              }
+          }
+          return null;
+      }
+      public boolean isEmpty(){
+          return n==0;
+      }
+       public void print() {
+
+    }
+    public v get(k key) {
+          int bucketidx=hashing(key);
+          for(Node node:bucket[bucketidx])
+              if(node.key==key)
+                  return node.value;
+          return null;
+
+    }
     public static void main(String[] args) {
         hashmap<String,Integer>hm=new hashmap<>();
         hm.put("Anay",2);
         hm.put("Shrija",3);
-        hm.put("ABC",4);
-        hm.put("XYZ",5);
-        hm.put("XYQ",6);
-        hm.print();
+        LinkedList<String>ll=hm.keySet();
+        for (int i=0;i<ll.size();i++) {
+            System.out.println(ll.get(i));
+        }
+        System.out.println(hm.get("Anay"));
 
     }
+
+
+
+
 }
 
 
