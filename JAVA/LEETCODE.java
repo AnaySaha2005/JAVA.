@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Stack;
 
 public class LEETCODE {
   
@@ -296,11 +297,36 @@ public class LEETCODE {
         }
        return str.toString();
         }
+    public static  int[] countBits(int n) {
+        int a[]=new int[n+1],prev=0;
+        int s=1;
+        a[0]=0;a[1]=1;
+        while(s*2<a.length)
+        {
+            a[s*2]++;
+            s*=2;
+        }
+        for(int i=3;i<a.length;i++){
+            if(a[i]==1)
+                continue;
+            else if(a[i-1]==1)
+                a[i]+=2;
+            else if(i%4==0)
+                a[i]=a[i-1]-1;
+           else if(i%2==0)
+                a[i]=a[i-1];
+           else a[i]=a[i-1]+1;
+        }
+
+
+        return a;
+    }
+
+
     
         public static void main(String[] args) {
-      String s="the sky is blue";
-            System.out.println(s);
-            System.out.println(reverseWords(s));
+      int a[]= countBits(16);
+
          }
         }
 
