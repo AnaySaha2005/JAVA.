@@ -321,15 +321,86 @@ public class LEETCODE {
 
         return a;
     }
-
+    public static  int uniquePaths(int m, int n) {
+         long x= factorial(m+n-2) ;
+        long y=factorial(Math.min(m,n)-1);
+        int k=Math.min(m,n)-1;
+        long z=factorial (m+n-2-k);
+        if(z==0)
+            z=1;
+        System.out.println(z);
+        return (int)(x/(y*z));
+    }
+    public static int factorial(int n){
+        if(n==0)
+            return 1;
+        else
+            return n*factorial(n-1);
+    }
 
     
         public static void main(String[] args) {
-      int a[]= countBits(16);
+        uniquePaths(51,9);
 
          }
         }
+class Solution {
+     class Node{
+        Node children[]=new Node[26];
+        boolean eow;
+        int child;
+        Node()
+        {
+            for(Node i:children){
+                i=null;
+            }
+            eow=false;
+            child=0;
+        }
+    }
+     Node root=new Node();
+    public void insert(String s){
+        Node temp=root;
+        for(int i=0;i<s.length();i++){
 
+            if(temp.children[s.charAt(i)-'a']==null){
+                temp.children[s.charAt(i)-'a']=new Node();
+                temp.child++;
+            }
+            temp=temp.children[s.charAt(i)-'a'];
+
+        }
+        temp.eow=true;
+    }
+    public String longestCommonPrefix(String[] str) {
+        for(int i=0;i<str.length;i++) {
+            if (str[i] == "")
+                return "";
+            insert(str[i]);
+        }
+        String s="";
+
+        Node temp=root;
+        while(temp.child==1){
+            for(int i=0;i<26;i++)
+                if(temp.children[i]!=null)
+                {  s=s+(char)('a'+i);
+                    temp= temp.children[i];
+                    if(temp.eow)
+                        return s;
+                    break;
+
+                }
+        }
+        return s;
+    }
+
+    public static void main(String[] args) {
+        Solution ob=new Solution();
+        String w[]={"","b"};
+        System.out.println(ob.longestCommonPrefix(w));
+    }
+}
     
     
     
